@@ -3,7 +3,7 @@ function init() {
   var selector = d3.select("#selDataset");
 
   // Use the list of sample names to populate the select options
-  d3.json("samples.json").then((data) => {
+  d3.json("../static/js/samples.json").then((data) => {
     var sampleNames = data.names;
 
     sampleNames.forEach((sample) => {
@@ -32,7 +32,7 @@ function optionChanged(newSample) {
 
 // Demographics Panel 
 function buildMetadata(sample) {
-  d3.json("static/js/samples.json").then((data) => {
+  d3.json("../static/js/samples.json").then((data) => {
     var metadata = data.metadata;
     // Filter the data for the object with the desired sample number
     var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
@@ -58,7 +58,7 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
 
   // 2. Use d3.json to load and retrieve the samples.json file 
-  d3.json("static/js/samples.json").then((data) => {
+  d3.json("../static/js/samples.json").then((data) => {
 
     // 3. Create a variable that holds the samples array. 
     var samples = data.samples;
@@ -81,7 +81,7 @@ function buildCharts(sample) {
     // Hint: Get the the top 10 otu_ids and map them in descending order  
     //  so the otu_ids with the most bacteria are last. 
 
-    var yticks = otuIds.map(newObj => "OTU" + newObj).slice(0, 10).reverse();
+    var yticks = otuIds.map(newObj => "OTU" + newObj + "  ").slice(0, 10).reverse();
     console.log(yticks)
 
     // 8. Create the trace for the bar chart. 
@@ -124,7 +124,9 @@ function buildCharts(sample) {
       title: "Bacteria Cultures Per Sample",
       xaxis: {title: "OTU ID"},
       hovermode:'closest',
-      autosize: true
+      autosize: true,
+      automargin: true,
+      pad: 5
     };
 
     // 3. Use Plotly to plot the data with the layout.
